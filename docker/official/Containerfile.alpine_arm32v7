@@ -5,6 +5,7 @@ USER root
 
 # Add the docker binary so running Docker commands from the master works nicely
 RUN apk -U add docker
+RUN alias podman=docker
 
 USER jenkins
 
