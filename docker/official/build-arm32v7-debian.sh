@@ -1,0 +1,12 @@
+#! /bin/bash
+podman build -f Containerfile.buster_slim -t ilhammhdd/blueocean:latest-debian-arm32v7
+podman run \
+  -it \
+  --name ilhammhdd_jenkins_blueocean \
+  --detach \
+  --privileged \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  -v jenkins-data:/var/jenkins_home \
+  -v jenkins-docker-certs:/certs/client:ro \
+  localhost/ilhammhdd/blueocean:latest-debian-arm32v7

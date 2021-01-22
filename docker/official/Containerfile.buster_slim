@@ -1,0 +1,19 @@
+FROM localhost/ilhammhdd/jenkins:latest-debian-arm32v7
+
+USER root
+
+RUN echo 'deb http://deb.debian.org/debian buster-backports main' >> /etc/apt/sources.list
+RUN echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_10/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+RUN curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_10/Release.key | apt-key add -
+
+RUN apt-get update
+RUN apt-get -y -t buster-backports install libseccomp2
+RUN apt-get -y install podman
+RUN apt-get -y install unzip
+
+RUN mkdir -p /usr/share/man/man1
+
+RUN apt-get update
+RUN apt-get install -y default-jre
+USER jenkins
+RUN install-plugins.sh antisamy-markup-formatter matrix-auth blueocean:$BLUEOCEAN_VERSION
