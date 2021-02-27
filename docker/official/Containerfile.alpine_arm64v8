@@ -1,0 +1,12 @@
+# This image is based off the latest Jenkins LTS
+FROM localhost/ilhammhdd/jenkins:latest-alpine-arm64v8
+
+USER root
+
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories
+RUN apk update && apk upgrade
+RUN apk -U add podman
+
+USER jenkins
+
+RUN install-plugins.sh antisamy-markup-formatter matrix-auth blueocean:$BLUEOCEAN_VERSION
